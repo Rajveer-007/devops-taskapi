@@ -1,0 +1,25 @@
+---
+- name: Install Java 17 runtime
+  ansible.builtin.apt:
+    name: openjdk-17-jre-headless
+    state: present
+    update_cache: true
+
+- name: Create application directory
+  ansible.builtin.file:
+    path: /opt/taskapi
+    state: directory
+    mode: '0755'
+
+- name: Copy built JAR to the server
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/target/taskapi.jar"
+    dest: /opt/taskapi/taskapi.jar
+    mode: '0644'
+  notify: restart taskapi
+
+- name: Install systemd unit file
+  ansible.builtin.template:
+    src: taskapi.service.j2
+    dest: /etc/systemd/system/taskapi.service
+  notify: restart taskapi

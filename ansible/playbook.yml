@@ -1,0 +1,6 @@
+---
+- name: Configure application server and deploy taskapi
+  hosts: appservers
+  become: true
+  roles:
+    - myapp

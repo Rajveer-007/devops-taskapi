@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: taskapi-config
+data:
+  SERVER_PORT: "8080"
+  APP_NAME: "taskapi"
